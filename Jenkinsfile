@@ -24,5 +24,21 @@ pipeline {
                 sh 'docker build -t jenkins_api_build .'
             }
         }
+
+
+        stage('Archive Docker Image') {
+            steps {
+                script {
+                    // Create a directory to store the image file
+                    sh 'mkdir -p docker-images'
+                    
+                    // Save the image to a .tar file inside the folder
+                    sh 'docker save -o docker-images/api_image.tar jenkins_api_build'
+                    
+                    // Optional: Archive the tar file so it's available in the Jenkins UI
+                    archiveArtifacts artifacts: 'docker-images/api_image.tar', allowEmptyArchive: false
+                }
+            }
+        }
     }
 }
