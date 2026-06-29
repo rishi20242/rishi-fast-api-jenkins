@@ -10,6 +10,7 @@ pipeline {
     stages {
         stage('Setup Environment') {
             steps {
+                sh "ls"
                 sh '''
                     python3 -m venv venv
                     ${PYTHON} -m pip install --upgrade pip
